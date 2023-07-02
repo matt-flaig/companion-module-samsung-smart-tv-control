@@ -33,10 +33,7 @@ class ModuleInstance extends InstanceBase {
 			this.config.port = 8002;
 		}
 		
-		// attempt to connec to the TV
 		this.establishConnection()
-		//this.findTVsOnLan()
-
 		this.updateActions()
 		this.updateVariableDefinitions()
 	}
@@ -75,7 +72,7 @@ class ModuleInstance extends InstanceBase {
 			}
 			
 			const config = {
-				debug: false, // Default: false
+				debug: false,
 				ip: this.config.host,
 				mac: this.config.macAddress,
 				nameApp: 'Bitfocus Companion',
@@ -91,7 +88,8 @@ class ModuleInstance extends InstanceBase {
 					console.debug(this.tv)
 					this.updateStatus(InstanceStatus.Ok)
 					
-					// Get token for websocket access
+					// Get token for persistant connection
+					// Without this token tv will prompt to allow control every time
 					this.tv.getToken((token) => {
 						if(token){
 							console.debug('Token: ' + token)
